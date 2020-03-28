@@ -3,11 +3,13 @@ package com.example.snapchat.Screens.SignUp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -20,11 +22,14 @@ public class SignUp_Birthday extends AppCompatActivity {
     private static final String TAG = "SignUp_Birthday";
     private TextView DisplayDate;
     private DatePickerDialog.OnDateSetListener dateSetListener;
+    Button btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up__birthday);
+
+        btnNext = findViewById(R.id.button2);
         DisplayDate = (TextView) findViewById(R.id.textView4);
         DisplayDate.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -50,5 +55,14 @@ public class SignUp_Birthday extends AppCompatActivity {
                 DisplayDate.setText(date);
             }
         };
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUp_Birthday.this,SignUp_Username.class);
+                startActivityForResult(intent,101);
+            }
+        });
+
     }
 }

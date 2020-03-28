@@ -19,12 +19,13 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="146dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="297dp"
+        android:layout_width="164dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="268dp"
         android:text="Continue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
