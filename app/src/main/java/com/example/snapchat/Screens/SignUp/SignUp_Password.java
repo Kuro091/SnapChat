@@ -11,12 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import Store.UserStore;
 import com.example.snapchat.R;
 
 public class SignUp_Password extends AppCompatActivity {
 
     Button btnShowHide,btnNext;
     EditText txtPassword;
+    UserStore userStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class SignUp_Password extends AppCompatActivity {
         btnShowHide = (Button) findViewById(R.id.button5);
         btnNext = (Button) findViewById(R.id.button4);
         txtPassword = (EditText) findViewById(R.id.editText4);
+        userStore = UserStore.getInstance();
 
         btnShowHide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +46,9 @@ public class SignUp_Password extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userStore.getUser().setPassword(txtPassword.getText().toString());
                 Intent intent = new Intent(SignUp_Password.this, SignUp_Email.class);
-                startActivityForResult(intent, 103);
+                startActivity(intent);
             }
         });
     }

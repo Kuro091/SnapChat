@@ -6,28 +6,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import Store.UserStore;
 import com.example.snapchat.R;
 
 public class SignUp_Email extends AppCompatActivity {
 
-    TextView txtChange;
     Button btnNext;
+    UserStore userStore;
+    EditText txtEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up__email);
 
-        txtChange = findViewById(R.id.textView9);
+        userStore = UserStore.getInstance();
         btnNext = findViewById(R.id.button6);
+        txtEmail = findViewById(R.id.editText5);
 
-        txtChange.setOnClickListener(new View.OnClickListener() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userStore.getUser().setEmail(txtEmail.getText().toString());
                 Intent intent = new Intent(SignUp_Email.this, SignUp_Phone.class);
-                startActivityForResult(intent,104);
+                startActivity(intent);
             }
         });
     }

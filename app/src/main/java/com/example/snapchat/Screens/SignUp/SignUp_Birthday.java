@@ -16,6 +16,9 @@ import android.widget.TextView;
 import com.example.snapchat.R;
 
 import java.util.Calendar;
+import java.util.Date;
+
+import Store.UserStore;
 
 public class SignUp_Birthday extends AppCompatActivity {
 
@@ -23,11 +26,14 @@ public class SignUp_Birthday extends AppCompatActivity {
     private TextView DisplayDate;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     Button btnNext;
+    UserStore userStore;
+    int year,month,day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up__birthday);
+        userStore = UserStore.getInstance();
 
         btnNext = findViewById(R.id.button2);
         DisplayDate = (TextView) findViewById(R.id.textView4);
@@ -35,9 +41,9 @@ public class SignUp_Birthday extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar cal =Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+                year = cal.get(Calendar.YEAR);
+                month = cal.get(Calendar.MONTH);
+                day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialog = new DatePickerDialog(SignUp_Birthday.this,android.R.style.Theme_Holo_Dialog_MinWidth,
                         dateSetListener,year,month,day);
@@ -59,10 +65,11 @@ public class SignUp_Birthday extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Date birthday = new Date(year,month,day);
+                userStore.getUser().setDob(birthday);
                 Intent intent = new Intent(SignUp_Birthday.this,SignUp_Username.class);
-                startActivityForResult(intent,101);
+                startActivity(intent);
             }
         });
-
     }
 }
