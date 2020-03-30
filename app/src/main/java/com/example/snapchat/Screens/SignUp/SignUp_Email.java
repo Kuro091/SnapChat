@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import Store.UserStore;
 import com.example.snapchat.R;
+import com.example.snapchat.Screens.MainActivity;
+import com.example.snapchat.Screens.Repo.UserRepo;
 
 public class SignUp_Email extends AppCompatActivity {
 
@@ -31,7 +33,12 @@ public class SignUp_Email extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 userStore.getUser().setEmail(txtEmail.getText().toString());
-                Intent intent = new Intent(SignUp_Email.this, SignUp_Phone.class);
+
+                String email = userStore.getUser().getEmail();
+                String password = userStore.getUser().getPassword();
+                new UserRepo().signUp(email,password,getApplicationContext());
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });

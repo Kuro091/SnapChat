@@ -15,6 +15,7 @@ import android.widget.Toast;
 import Store.UserStore;
 import com.example.snapchat.R;
 import com.example.snapchat.Screens.FirebaseRef.FirebaseAuthRef;
+import com.example.snapchat.Screens.Repo.UserRepo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -27,7 +28,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.concurrent.TimeUnit;
-
 public class SignUp_Phone extends AppCompatActivity {
 
     UserStore userStore;
@@ -81,6 +81,9 @@ public class SignUp_Phone extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+                            String email = userStore.getUser().getEmail();
+                            String password = userStore.getUser().getPassword();
+                            new UserRepo().signUp(email,password, getApplicationContext());
                         } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                             Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_LONG).show();
                         }
