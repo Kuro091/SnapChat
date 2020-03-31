@@ -8,19 +8,21 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.snapchat.R;
-import com.example.snapchat.Screens.FirebaseRef.FirebaseAuthRef;
-import com.example.snapchat.Screens.Repo.UserRepo;
+import FirebaseRef.FirebaseAuthRef;
+
 import com.example.snapchat.Screens.SignUp.SignUp_Name;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnSignUp,btnSignIn;
+    Button btnSignUp, btnSignIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-if(FirebaseAuthRef.getmAuth().getCurrentUser()!=null){
-    UserRepo.
-}
+        if (FirebaseAuthRef.getmAuth().getCurrentUser() != null) {
+            FirebaseAuth.getInstance().signOut();
+        }
         btnSignIn = findViewById(R.id.button10);
         btnSignUp = findViewById(R.id.button9);
 

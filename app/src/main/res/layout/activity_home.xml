@@ -4,28 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    android:layout_alignParentBottom="true"
+    tools:context=".Screens.Home">
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="266dp"
-        android:layout_marginEnd="152dp"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="90dp"
-        android:layout_marginEnd="7dp"
-        android:text="Hello"
-        android:textSize="30sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView11"
-        app:layout_constraintEnd_toStartOf="@+id/textView11"
-        app:layout_constraintStart_toStartOf="parent" />
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="1dp" />
+
+        <Button
+            android:id="@+id/btnCapture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="180dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button"
+ />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="690dp">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="82dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/yantramanav"
+                android:text="Hello"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="81dp"
+                android:layout_height="42dp"
+                android:layout_marginBottom="-102dp"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

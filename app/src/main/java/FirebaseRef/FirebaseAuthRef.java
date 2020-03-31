@@ -1,4 +1,4 @@
-package com.example.snapchat.Screens.FirebaseRef;
+package FirebaseRef;
 
 import com.google.firebase.auth.FirebaseAuth;
 

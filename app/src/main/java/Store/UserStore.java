@@ -1,9 +1,7 @@
 package Store;
 
-import android.accounts.Account;
-
-import com.example.snapchat.Screens.Entities.AccountUser;
-import com.example.snapchat.Screens.FirebaseRef.FirebaseAuthRef;
+import Entities.AccountUser;
+import FirebaseRef.FirebaseAuthRef;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UserStore {
@@ -32,7 +30,11 @@ public class UserStore {
     }
 
     public static FirebaseUser getSignedInUser(){
-        return FirebaseAuthRef.getmAuth().getCurrentUser()!=null ? FirebaseAuthRef.getmAuth().getCurrentUser() : null;
+        if(FirebaseAuthRef.getmAuth().getCurrentUser()==null){
+            return null;
+        }else{
+            return FirebaseAuthRef.getmAuth().getCurrentUser();
+        }
     }
 
     public AccountUser getSignedInUserFromDatabase(){

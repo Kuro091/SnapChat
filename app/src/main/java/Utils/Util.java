@@ -1,4 +1,4 @@
-package com.example.snapchat.Screens.Utils;
+package Utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

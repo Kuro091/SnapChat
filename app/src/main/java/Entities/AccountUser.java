@@ -1,4 +1,4 @@
-package com.example.snapchat.Screens.Entities;
+package Entities;
 
 import java.io.Serializable;
 import java.util.Date;

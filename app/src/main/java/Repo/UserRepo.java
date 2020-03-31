@@ -1,38 +1,29 @@
-package com.example.snapchat.Screens.Repo;
+package Repo;
 
-import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.snapchat.Home;
-import com.example.snapchat.Screens.Entities.AccountUser;
-import com.example.snapchat.Screens.FirebaseRef.FirebaseAuthRef;
-import com.example.snapchat.Screens.FirebaseRef.FirebaseDatabaseRef;
-import com.example.snapchat.Screens.FirebaseRef.FirebaseStorageRef;
-import com.example.snapchat.Screens.SignUp.SignUp_Email;
-import com.example.snapchat.Screens.Utils.Util;
+import FirebaseRef.FirebaseAuthRef;
+import FirebaseRef.FirebaseDatabaseRef;
+
+import com.example.snapchat.Screens.Home;
+import com.example.snapchat.Screens.Snap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import Store.UserStore;
 
 public class UserRepo {
+
+    private static UserRepo userRepo =null;
+
     UserStore userStore;
 
     public FirebaseUser getUser() {
@@ -84,7 +75,19 @@ public class UserRepo {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Intent intent = new Intent(context, Home.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
+    }
+
+    public static UserRepo getInstance()
+    {
+        // To ensure only one instance is created
+        if (userRepo == null)
+        {
+            userRepo = new UserRepo();
+        }
+        return userRepo;
     }
 }

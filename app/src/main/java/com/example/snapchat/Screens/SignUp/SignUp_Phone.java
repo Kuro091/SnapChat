@@ -5,18 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import Store.UserStore;
 import com.example.snapchat.R;
-import com.example.snapchat.Screens.FirebaseRef.FirebaseAuthRef;
 import com.example.snapchat.Screens.MainActivity;
-import com.example.snapchat.Screens.Repo.UserRepo;
+import Repo.UserRepo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -25,8 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.concurrent.TimeUnit;
 public class SignUp_Phone extends AppCompatActivity {
@@ -84,7 +79,7 @@ public class SignUp_Phone extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
                             String email = userStore.getUser().getEmail();
                             String password = userStore.getUser().getPassword();
-                            new UserRepo().signUp(email,password,getApplicationContext());
+                            UserRepo.getInstance().signUp(email,password,getApplicationContext());
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

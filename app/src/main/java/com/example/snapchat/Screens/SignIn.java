@@ -2,7 +2,6 @@ package com.example.snapchat.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -11,9 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.snapchat.R;
-import com.example.snapchat.Screens.Repo.UserRepo;
-import com.example.snapchat.Screens.SignUp.SignUp_Email;
-import com.example.snapchat.Screens.SignUp.SignUp_Password;
+import Repo.UserRepo;
 
 public class SignIn extends AppCompatActivity {
     Button btnShowHide,btnSignIn;
