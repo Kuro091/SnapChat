@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import Store.UserStore;
 import com.example.snapchat.R;
@@ -30,15 +31,17 @@ public class SignUp_Email extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userStore.getUser().setEmail(txtEmail.getText().toString());
+                if(!txtEmail.getText().toString().matches("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$")){
+                    Toast.makeText(getApplicationContext(),"Please input valid email",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    userStore.getUser().setEmail(txtEmail.getText().toString());
+                    String email = userStore.getUser().getEmail();
+                    String password = userStore.getUser().getPassword();
+                    UserRepo.getInstance().signUp(email, password, getApplicationContext());
 
-                String email = userStore.getUser().getEmail();
-                String password = userStore.getUser().getPassword();
-                UserRepo.getInstance().signUp(email,password,getApplicationContext());
-
-                UserRepo.getInstance().signIn(email, password, getApplicationContext());
-                //Intent intent = new Intent(getApplicationContext(), SignUp_Phone.class);
-                //startActivity(intent);
+                    UserRepo.getInstance().signIn(email, password, getApplicationContext());
+                }
             }
         });
     }

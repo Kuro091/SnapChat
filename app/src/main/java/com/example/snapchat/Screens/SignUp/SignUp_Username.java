@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import Store.UserStore;
 import com.example.snapchat.R;
@@ -28,9 +29,14 @@ public class SignUp_Username extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            userStore.getUser().setUsername(txtUsername.getText().toString());
-            Intent intent = new Intent(SignUp_Username.this,SignUp_Password.class);
-            startActivity(intent);
+                if(txtUsername.getText().toString().trim().equals("")){
+                    Toast.makeText(getApplicationContext(),"Please input username",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    userStore.getUser().setUsername(txtUsername.getText().toString());
+                    Intent intent = new Intent(SignUp_Username.this, SignUp_Password.class);
+                    startActivity(intent);
+                }
             }
         });
     }

@@ -54,29 +54,18 @@ public class UserRepo {
         });
     }
 
-//        //Read data
-//        FirebaseDatabaseRef.getUserRef().child().addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//            AccountUser user;
-//                user =dataSnapshot.getValue(AccountUser.class);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-//    }
-
     public void signIn (String email, String pass, final Context context) {
         FirebaseAuthRef.getmAuth().signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Intent intent = new Intent(context, Home.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                if(task.isSuccessful()){
+                    Intent intent = new Intent(context, Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+                else{
+                    Toast.makeText(context,"Wrong Email or Password",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

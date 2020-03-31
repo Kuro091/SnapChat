@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.snapchat.R;
 
@@ -25,6 +26,7 @@ public class SignUp_Birthday extends AppCompatActivity {
     private static final String TAG = "SignUp_Birthday";
     private TextView DisplayDate;
     private DatePickerDialog.OnDateSetListener dateSetListener;
+    boolean selected = false;
     Button btnNext;
     UserStore userStore;
     int year,month,day;
@@ -56,19 +58,24 @@ public class SignUp_Birthday extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 month = month +1;
-                Log.d(TAG,"onDateSet:mm/dd/yyy:"+ month + "/"+day+"/"+year);
                 String date = month + "/" + day + "/" + year;
                 DisplayDate.setText(date);
+                selected = true;
             }
         };
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date birthday = new Date(year,month,day);
-                userStore.getUser().setDob(birthday);
-                Intent intent = new Intent(SignUp_Birthday.this,SignUp_Username.class);
-                startActivity(intent);
+                if(!selected){
+                    Toast.makeText(getApplicationContext(),"Please select date",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Date birthday = new Date(year, month, day);
+                    userStore.getUser().setDob(birthday);
+                    Intent intent = new Intent(SignUp_Birthday.this, SignUp_Username.class);
+                    startActivity(intent);
+                }
             }
         });
     }

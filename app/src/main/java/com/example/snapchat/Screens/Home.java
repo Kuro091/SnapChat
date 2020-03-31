@@ -117,4 +117,12 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
         camera.release();
         camera = null;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
+        System.exit(0);
+    }
 }

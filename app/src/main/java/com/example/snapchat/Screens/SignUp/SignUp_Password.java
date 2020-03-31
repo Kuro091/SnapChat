@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import Store.UserStore;
 import com.example.snapchat.R;
@@ -46,9 +47,17 @@ public class SignUp_Password extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userStore.getUser().setPassword(txtPassword.getText().toString());
-                Intent intent = new Intent(SignUp_Password.this, SignUp_Email.class);
-                startActivity(intent);
+                if(txtPassword.getText().toString().trim().equals("")){
+                    Toast.makeText(getApplicationContext(),"Please input password",Toast.LENGTH_LONG).show();
+                }
+                else if(txtPassword.getText().toString().trim().length()<8){
+                    Toast.makeText(getApplicationContext(),"Password must have at least 8 characters",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    userStore.getUser().setPassword(txtPassword.getText().toString());
+                    Intent intent = new Intent(SignUp_Password.this, SignUp_Email.class);
+                    startActivity(intent);
+                }
             }
         });
     }

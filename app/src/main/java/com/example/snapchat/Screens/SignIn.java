@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.snapchat.R;
 import Repo.UserRepo;
@@ -41,7 +42,12 @@ public class SignIn extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new UserRepo().signIn(txtPassword.getText().toString(),txtPassword.getText().toString(),getApplicationContext());
+                if(txtEmail.getText().toString().trim().equals("") || txtPassword.getText().toString().trim().equals("")){
+                    Toast.makeText(getApplicationContext(),"Please input both email and password",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    UserRepo.getInstance().signIn(txtEmail.getText().toString(), txtPassword.getText().toString(), getApplicationContext());
+                }
             }
         });
     }
