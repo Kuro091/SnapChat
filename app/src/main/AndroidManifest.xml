@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.snapchat">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,14 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Screens.Login"></activity>
-        <activity android:name=".Screens.SignUp.SignUp_Phone" android:exported="true" />
-        <activity android:name=".Screens.SignUp.SignUp_Email" android:exported="true" />
-        <activity android:name=".Screens.SignUp.SignUp_Password" android:exported="true" />
-        <activity android:name=".Screens.SignUp.SignUp_Username" android:exported="true" />
-        <activity android:name=".Screens.SignUp.SignUp_Birthday" android:exported="true"/>
-        <activity android:name=".Screens.SignUp.SignUp_Name" android:exported="true"/>
-        <activity android:name=".Screens.Snap" android:exported="true"/>
+        <activity android:name=".Home"></activity>
+        <activity android:name=".Screens.SignIn" />
+        <activity
+            android:name=".Screens.SignUp.SignUp_Phone"
+            android:exported="true" />
+        <activity
+            android:name=".Screens.SignUp.SignUp_Email"
+            android:exported="true" />
+        <activity
+            android:name=".Screens.SignUp.SignUp_Password"
+            android:exported="true" />
+        <activity
+            android:name=".Screens.SignUp.SignUp_Username"
+            android:exported="true" />
+        <activity
+            android:name=".Screens.SignUp.SignUp_Birthday"
+            android:exported="true" />
+        <activity
+            android:name=".Screens.SignUp.SignUp_Name"
+            android:exported="true" />
+        <activity
+            android:name=".Screens.Snap"
+            android:exported="true" />
         <activity android:name=".Screens.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

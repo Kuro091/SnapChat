@@ -2,10 +2,12 @@ package com.example.snapchat.Screens.Repo;
 
 import android.accounts.Account;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.snapchat.Home;
 import com.example.snapchat.Screens.Entities.AccountUser;
 import com.example.snapchat.Screens.FirebaseRef.FirebaseAuthRef;
 import com.example.snapchat.Screens.FirebaseRef.FirebaseDatabaseRef;
@@ -59,7 +61,7 @@ public class UserRepo {
                 Toast.makeText(context, "CDF", Toast.LENGTH_LONG).show();
             }
         });
-
+    }
 
 //        //Read data
 //        FirebaseDatabaseRef.getUserRef().child().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -77,8 +79,12 @@ public class UserRepo {
 
 //    }
 
-//    signIn(){
-//
-//    }
+    public void signIn (String email, String pass, final Context context) {
+        FirebaseAuthRef.getmAuth().signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Intent intent = new Intent(context, Home.class);
+            }
+        });
     }
 }

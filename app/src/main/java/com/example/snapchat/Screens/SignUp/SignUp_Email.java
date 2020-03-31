@@ -38,7 +38,7 @@ public class SignUp_Email extends AppCompatActivity {
                 String password = userStore.getUser().getPassword();
                 new UserRepo().signUp(email,password,getApplicationContext());
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignUp_Phone.class);
                 startActivity(intent);
             }
         });
