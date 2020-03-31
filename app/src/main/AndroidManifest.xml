@@ -13,8 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Screens.Home"
-            android:exported="true"/>
+        <activity android:name=".Screens.ChatActivity"></activity>
+        <activity
+            android:name=".Screens.Home"
+            android:exported="true" />
         <activity android:name=".Screens.SignIn" />
         <activity
             android:name=".Screens.SignUp.SignUp_Phone"

@@ -44,12 +44,12 @@ public class UserRepo {
         }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(context, "ABC", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Sign up success!!", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "CDF", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Sign up failed!!", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -63,7 +63,7 @@ public class UserRepo {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
-                else{
+                else if (!task.isSuccessful()){
                     Toast.makeText(context,"Wrong Email or Password",Toast.LENGTH_LONG).show();
                 }
             }
