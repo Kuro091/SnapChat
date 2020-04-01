@@ -22,14 +22,13 @@
             android:id="@+id/btnCapture"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignParentLeft="false"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="false"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="180dp"
             android:layout_marginBottom="20dp"
             android:layout_weight="1"
-            android:background="@drawable/round_button"
- />
+            android:background="@drawable/round_button" />
 
         <LinearLayout
             android:layout_width="match_parent"

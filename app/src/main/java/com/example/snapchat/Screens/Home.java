@@ -2,11 +2,11 @@ package com.example.snapchat.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snapchat.R;
+import com.example.snapchat.Screens.EditImage.EditImage;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -63,7 +64,9 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
                 storePhotoToStorage(cbmp, pathFileName);
 
                 Toast.makeText(getApplicationContext(), "Done!!!", Toast.LENGTH_LONG).show();
-
+                Intent intent = new Intent(getApplicationContext(), EditImage.class);
+                intent.putExtra("myImage", data);
+                startActivity(intent);
                 camera.startPreview();
             }
         };
@@ -121,8 +124,10 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         finish();
         System.exit(0);
     }
+
+
+
 }
