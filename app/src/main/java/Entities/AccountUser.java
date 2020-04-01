@@ -2,6 +2,7 @@ package Entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class AccountUser implements Serializable{
     private String id;
@@ -12,6 +13,15 @@ public class AccountUser implements Serializable{
     private String email;
     private String phone;
     private boolean actived;
+    private List<String> friendList;
+
+    public List<String> getFriendList() {
+        return friendList;
+    }
+
+    public void setFriendList(List<String> friendList) {
+        this.friendList = friendList;
+    }
 
     public AccountUser(){}
 

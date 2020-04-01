@@ -26,6 +26,7 @@ import Store.UserStore;
 public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
     TextView txtUserName;
     Button btnSnap;
+    Button btnChat;
     private SurfaceView surfaceView;
     private Camera camera;
     private SurfaceHolder surfaceHolder;
@@ -40,6 +41,7 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
 
         txtUserName.setText(UserStore.getSignedInUser().getEmail());
         btnSnap = findViewById(R.id.btnCapture);
+        btnChat = findViewById(R.id.btnChat);
         surfaceView = findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
@@ -71,6 +73,13 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
             }
         };
 
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

@@ -17,6 +17,11 @@
         <activity
             android:name=".Screens.Home"
             android:exported="true" />
+        <activity android:name=".Screens.GroupChatActivity"></activity>
+        <activity android:name=".Screens.ChatActivity" />
+        <activity
+            android:name=".Screens.Home"
+            android:exported="true" />
         <activity android:name=".Screens.SignIn" />
         <activity
             android:name=".Screens.SignUp.SignUp_Phone"
