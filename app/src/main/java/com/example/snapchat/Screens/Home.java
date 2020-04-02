@@ -32,6 +32,7 @@ import com.example.snapchat.Entities.AccountUser;
 import com.example.snapchat.FirebaseRef.FirebaseDatabaseRef;
 import com.example.snapchat.R;
 
+import com.example.snapchat.Screens.EditImg.EditorMain;
 import com.example.snapchat.Store.UserStore;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -147,21 +148,26 @@ public class Home extends AppCompatActivity {
         // Build the image capture use case and attach button click listener
         ImageCapture imageCapture = new ImageCapture(imageCaptureConfig);
         btnSnap.setOnClickListener(new View.OnClickListener() {
-            File[] files = getExternalMediaDirs();
-            File file = new File(files[0], "${System.currentTimeMillis()}.jpg");
+
 
 
 
             @Override
             public void onClick(View v) {
+                File[] files = getExternalMediaDirs();
+                Long time = System.currentTimeMillis();
+                File file = new File(files[0], time + ".jpg");
                 imageCapture.takePicture(file, excecutor, new ImageCapture.OnImageSavedListener() {
                     @Override
                     public void onImageSaved(@NonNull File file) {
-                        String filePath = file.getPath();
+                        String filePath = file.getAbsolutePath();
                         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 
+                        Intent intent = new Intent(getApplicationContext(), EditorMain.class);
+                        intent.putExtra("imgPath", filePath);
+                        startActivity(intent);
 
-                        Toast.makeText(getApplicationContext(), "Capture success!!", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
@@ -175,7 +181,7 @@ public class Home extends AppCompatActivity {
 
 
         // Bind use cases to lifecycle
-        CameraX.bindToLifecycle(this, preview);
+        CameraX.bindToLifecycle(this, preview, imageCapture);
     }
 
     private void updateTransform() {

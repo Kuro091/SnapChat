@@ -3,6 +3,7 @@ package com.example.snapchat.Screens.EditImg;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -47,7 +48,7 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
 
     private static final String TAG = EditorMain.class.getSimpleName();
 
-    public static final String IMAGE_NAME = "dog.jpg";
+    public static String IMAGE_PATH = "dog.jpg";
 
     public static final int SELECT_GALLERY_IMAGE = 101;
 
@@ -222,7 +223,8 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
 
     // load the default image from assets on app launch
     private void loadImage() {
-        originalImage = BitmapUtils.getBitmapFromAssets(this, IMAGE_NAME, 300, 300);
+        IMAGE_PATH = getIntent().getStringExtra("imgPath");
+        originalImage = BitmapUtils.getBitmapFromGallery(this, Uri.parse(IMAGE_PATH),600,600);
         filteredImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         finalImage = originalImage.copy(Bitmap.Config.ARGB_8888, true);
         imagePreview.setImageBitmap(originalImage);

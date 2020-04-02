@@ -1,6 +1,7 @@
 package com.example.snapchat.Screens.EditImg.Fragments;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -93,7 +94,7 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapter.T
                 Bitmap thumbImage;
 
                 if (bitmap == null) {
-                    thumbImage = BitmapUtils.getBitmapFromAssets(getActivity(), EditorMain.IMAGE_NAME, 100, 100);
+                    thumbImage = BitmapUtils.getBitmapFromGallery(getActivity(), Uri.parse(EditorMain.IMAGE_PATH),100,600);
                 } else {
                     thumbImage = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
                 }

@@ -56,12 +56,13 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap getBitmapFromGallery(Context context, Uri path, int width, int height) {
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Cursor cursor = context.getContentResolver().query(path, filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
+//        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//        Cursor cursor = context.getContentResolver().query(path, filePathColumn, null, null, null);
+//        cursor.moveToFirst();
+//        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//        String picturePath = cursor.getString(columnIndex);
+//        cursor.close();
+        String picturePath = path.getPath();
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
