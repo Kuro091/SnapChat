@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -38,7 +39,7 @@ import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 import java.util.ArrayList;
 import java.util.List;
 
-import Utils.BitmapUtils;
+import com.example.snapchat.Utils.BitmapUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -59,7 +60,7 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-//    @BindView(R.id.coordinator_layout)
+    @BindView(R.id.cordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
     Bitmap originalImage;
@@ -86,8 +87,11 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_editor_main);
         ButterKnife.bind(this);
+
+        imagePreview = findViewById(R.id.image_preview);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

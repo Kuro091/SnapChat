@@ -9,10 +9,9 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import Store.UserStore;
+import com.example.snapchat.Store.UserStore;
 import com.example.snapchat.R;
 
 public class SignUp_Password extends AppCompatActivity {

@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import Store.UserStore;
+import com.example.snapchat.Store.UserStore;
 import com.example.snapchat.R;
 import com.example.snapchat.Screens.MainActivity;
-import Repo.UserRepo;
+import com.example.snapchat.Repo.UserRepo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import Store.UserStore;
+import com.example.snapchat.Store.UserStore;
 import com.example.snapchat.R;
 
 public class SignUp_Username extends AppCompatActivity {

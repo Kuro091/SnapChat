@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.snapchat.R;
-import FirebaseRef.FirebaseAuthRef;
+import com.example.snapchat.FirebaseRef.FirebaseAuthRef;
 
 import com.example.snapchat.Screens.SignUp.SignUp_Name;
 import com.google.firebase.auth.FirebaseAuth;

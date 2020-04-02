@@ -32,7 +32,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
 
-import FirebaseRef.FirebaseStorageRef;
+import com.example.snapchat.FirebaseRef.FirebaseStorageRef;
 
 public class Snap extends AppCompatActivity {
     EditText txtMsg;

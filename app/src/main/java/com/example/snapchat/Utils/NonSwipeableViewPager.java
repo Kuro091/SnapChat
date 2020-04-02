@@ -1,4 +1,4 @@
-package Utils;
+package com.example.snapchat.Utils;
 
 import android.content.Context;
 import android.util.AttributeSet;
