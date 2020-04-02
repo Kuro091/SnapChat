@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.snapchat.R;
+import com.example.snapchat.Screens.EditImg.EditorMain;
+import com.example.snapchat.Screens.MainActivity;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.utils.ThumbnailsManager;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.ThumbnailsAdapter;
-import Entities.ThumbnailItem;
+import com.zomato.photofilters.utils.ThumbnailItem;
 import Utils.BitmapUtils;
 import Utils.SpaceItemsDecoration;
 import butterknife.BindView;
@@ -39,7 +41,7 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapter.T
 
     ThumbnailsAdapter mAdapter;
 
-    List<com.zomato.photofilters.utils.ThumbnailItem> thumbnailItemList;
+    List<ThumbnailItem> thumbnailItemList;
 
     FiltersListFragmentListener listener;
 
@@ -64,7 +66,7 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapter.T
 
         ButterKnife.bind(this, view);
 
-        thumbnailItemList = new ArrayList<com.zomato.photofilters.utils.ThumbnailItem>();
+        thumbnailItemList = new ArrayList<>();
         mAdapter = new ThumbnailsAdapter(getActivity(), thumbnailItemList, this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -92,7 +94,7 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapter.T
                 Bitmap thumbImage;
 
                 if (bitmap == null) {
-                    thumbImage = BitmapUtils.getBitmapFromAssets(getActivity(), "abc.jpg", 100, 100);
+                    thumbImage = BitmapUtils.getBitmapFromAssets(getActivity(), EditorMain.IMAGE_NAME, 100, 100);
                 } else {
                     thumbImage = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
                 }
