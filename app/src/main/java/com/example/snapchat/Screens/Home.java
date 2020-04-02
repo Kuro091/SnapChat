@@ -15,13 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snapchat.R;
-import com.example.snapchat.Screens.EditImage.EditImage;
+import com.example.snapchat.Screens.EditImg.EditorMain;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import Store.UserStore;
+import com.example.snapchat.Store.UserStore;
 
 public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
     TextView txtUserName;
@@ -66,7 +66,7 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
                 storePhotoToStorage(cbmp, pathFileName);
 
                 Toast.makeText(getApplicationContext(), "Done!!!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(), EditImage.class);
+                Intent intent = new Intent(getApplicationContext(), EditorMain.class);
                 intent.putExtra("myImage", data);
                 startActivity(intent);
                 camera.startPreview();

@@ -8,10 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import Store.UserStore;
+import com.example.snapchat.Store.UserStore;
 import com.example.snapchat.R;
 
-import Repo.UserRepo;
+import com.example.snapchat.Repo.UserRepo;
 
 public class SignUp_Email extends AppCompatActivity {
 

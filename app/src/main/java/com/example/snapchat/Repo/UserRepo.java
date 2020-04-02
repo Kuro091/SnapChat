@@ -1,4 +1,4 @@
-package Repo;
+package com.example.snapchat.Repo;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,11 +6,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import FirebaseRef.FirebaseAuthRef;
-import FirebaseRef.FirebaseDatabaseRef;
+import com.example.snapchat.FirebaseRef.FirebaseAuthRef;
+import com.example.snapchat.FirebaseRef.FirebaseDatabaseRef;
 
 import com.example.snapchat.Screens.Home;
-import com.example.snapchat.Screens.Snap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -18,7 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
-import Store.UserStore;
+import com.example.snapchat.Store.UserStore;
 
 public class UserRepo {
 

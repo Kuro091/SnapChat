@@ -1,4 +1,4 @@
-package Utils;
+package com.example.snapchat.Utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

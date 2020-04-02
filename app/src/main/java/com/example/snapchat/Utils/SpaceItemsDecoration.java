@@ -1,4 +1,4 @@
-package Utils;
+package com.example.snapchat.Utils;
 
 import android.graphics.Rect;
 import android.view.View;

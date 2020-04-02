@@ -1,7 +1,7 @@
-package Store;
+package com.example.snapchat.Store;
 
-import Entities.AccountUser;
-import FirebaseRef.FirebaseAuthRef;
+import com.example.snapchat.Entities.AccountUser;
+import com.example.snapchat.FirebaseRef.FirebaseAuthRef;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UserStore {

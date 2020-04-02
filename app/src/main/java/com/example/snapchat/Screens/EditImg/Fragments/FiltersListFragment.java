@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.example.snapchat.R;
 import com.example.snapchat.Screens.EditImg.EditorMain;
-import com.example.snapchat.Screens.MainActivity;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.utils.ThumbnailsManager;
@@ -23,10 +22,10 @@ import com.zomato.photofilters.utils.ThumbnailsManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapters.ThumbnailsAdapter;
+import com.example.snapchat.Adapters.ThumbnailsAdapter;
 import com.zomato.photofilters.utils.ThumbnailItem;
-import Utils.BitmapUtils;
-import Utils.SpaceItemsDecoration;
+import com.example.snapchat.Utils.BitmapUtils;
+import com.example.snapchat.Utils.SpaceItemsDecoration;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
