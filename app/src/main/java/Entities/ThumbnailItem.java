@@ -1,13 +1,11 @@
-package com.example.snapchat.Screens.EditImage;
+package Entities;
 
 import android.graphics.Bitmap;
 
 import com.zomato.photofilters.imageprocessors.Filter;
 
-/**
- * @author Varun on 01/07/15.
- */
-public class ThumbnailItem {
+public class ThumbnailItem extends com.zomato.photofilters.utils.ThumbnailItem {
+    public String filterName;
     public Bitmap image;
     public Filter filter;
 
