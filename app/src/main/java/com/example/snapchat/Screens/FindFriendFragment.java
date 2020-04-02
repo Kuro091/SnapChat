@@ -40,7 +40,6 @@ public class FindFriendFragment extends Fragment {
     private ListView list_view;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_groups = new ArrayList<>();
-    //private FirebaseUser currentUser = mAuth.getCurrentUser();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private String currentUserID = mAuth.getCurrentUser().getUid();
     private DatabaseReference ListFriendRef;
@@ -69,7 +68,7 @@ public class FindFriendFragment extends Fragment {
                 String currentFriendName = adapterView.getItemAtPosition(position).toString();
 
                 Intent groupChatIntent = new Intent(getContext(), GroupChatActivity.class);
-                groupChatIntent.putExtra("groupName" , currentFriendName);
+                groupChatIntent.putExtra("friendName" , currentFriendName);
                 startActivity(groupChatIntent);
             }
         });
@@ -100,7 +99,8 @@ public class FindFriendFragment extends Fragment {
 
                 }
 
-
+                String key = FirebaseAuthRef.getmAuth().getCurrentUser().getEmail();
+                set.remove(key);
                 list_of_groups.clear();
                 list_of_groups.addAll(set);
 
