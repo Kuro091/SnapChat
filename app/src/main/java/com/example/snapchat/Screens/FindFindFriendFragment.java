@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.snapchat.Entities.AccountUser;
 import com.example.snapchat.FirebaseRef.FirebaseAuthRef;
 import com.example.snapchat.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,14 +27,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.example.snapchat.Entities.AccountUser;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FindFriendFragment extends Fragment {
-    private View friendFragmentView;
+public class FindFindFriendFragment extends Fragment {
+
+
+    private View findfriendFragmentView;
     private ListView list_view;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_groups = new ArrayList<>();
@@ -41,7 +41,7 @@ public class FindFriendFragment extends Fragment {
     private String currentUserID = mAuth.getCurrentUser().getUid();
     private DatabaseReference ListFriendRef;
 
-    public FindFriendFragment() {
+    public FindFindFriendFragment() {
         // Required empty public constructor
     }
 
@@ -50,7 +50,9 @@ public class FindFriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        friendFragmentView = inflater.inflate(R.layout.fragment_find_friend, container, false);
+        findfriendFragmentView = inflater.inflate(R.layout.fragment_find_find_friend, container, false);
+
+
         ListFriendRef = FirebaseDatabase.getInstance().getReference().child("users");
 
 
@@ -64,19 +66,20 @@ public class FindFriendFragment extends Fragment {
             {
                 String currentFriendName = adapterView.getItemAtPosition(position).toString();
 
-                Intent groupChatIntent = new Intent(getContext(), GroupChatActivity.class);
-                groupChatIntent.putExtra("friendName" , currentFriendName);
-                startActivity(groupChatIntent);
+                Intent ProfileIntent = new Intent(getContext(), ProfileActivity.class);
+                ProfileIntent.putExtra("friendName" , currentFriendName);
+                startActivity(ProfileIntent);
             }
         });
 
-        return friendFragmentView;
-    }
+        return findfriendFragmentView;
 
+
+    }
 
     private void IntializeFields()
     {
-        list_view = (ListView) friendFragmentView.findViewById(R.id.list_view);
+        list_view = (ListView) findfriendFragmentView.findViewById(R.id.list_view);
         arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, list_of_groups);
         list_view.setAdapter(arrayAdapter);
     }
@@ -92,7 +95,7 @@ public class FindFriendFragment extends Fragment {
 
                 while (iterator.hasNext())
                 {
-                        set.add(((DataSnapshot) iterator.next()).getValue(AccountUser.class).getEmail());
+                    set.add(((DataSnapshot) iterator.next()).getValue(AccountUser.class).getEmail());
 
                 }
 
@@ -110,7 +113,5 @@ public class FindFriendFragment extends Fragment {
             }
         });
     }
-
-
 
 }

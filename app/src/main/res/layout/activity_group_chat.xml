@@ -35,6 +35,12 @@
     </ScrollView>
 
 
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/friend_list"
+        />
 
     <LinearLayout
         android:id="@+id/myLinearLayout"
@@ -58,6 +64,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/send_message"
             />
+
 
     </LinearLayout>
 

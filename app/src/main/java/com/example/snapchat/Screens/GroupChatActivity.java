@@ -3,6 +3,7 @@ package com.example.snapchat.Screens;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,7 +42,7 @@ import java.util.Map;
 
 public class GroupChatActivity extends AppCompatActivity {
 
-    private ImageButton SendMessageButton;
+    private ImageButton SendMessageButton , BackButton;
     private String currentFriendName;
     private EditText userMessageInput;
     private TextView displayTextMessages;
@@ -77,10 +78,10 @@ public class GroupChatActivity extends AppCompatActivity {
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users");
 
-        String test = mAuth.getCurrentUser().getEmail().toString();
-         test =  test.substring(0, test.indexOf("@"));
+        String currenUserEmailSubString = mAuth.getCurrentUser().getEmail().toString();
+        currenUserEmailSubString =  currenUserEmailSubString.substring(0, test.indexOf("@"));
         ThisAccountMessageRef = FirebaseDatabaseRef.getUserRef().child(FirebaseDatabaseRef.getUserId()).child("messages").child(currentFriendName);
-        FriendAccountMessageRef = FirebaseDatabaseRef.getUserRef().child(clickedFriend.getId()).child("messages").child(test);
+        FriendAccountMessageRef = FirebaseDatabaseRef.getUserRef().child(clickedFriend.getId()).child("messages").child(currenUserEmailSubString);
 
 
 
@@ -100,12 +101,20 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
 
+        BackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendUserToChatActivity();
+            }
+        });
+
+
     }
 
 
     private void InitializeFields() {
         getSupportActionBar().setTitle(currentFriendName);
-
+        BackButton = (ImageButton) findViewById(R.id.back_button);
         SendMessageButton = (ImageButton) findViewById(R.id.send_message_button);
         userMessageInput = (EditText) findViewById(R.id.input_group_message);
         displayTextMessages = (TextView) findViewById(R.id.group_chat_text_display);
@@ -228,5 +237,12 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void SendUserToChatActivity()
+    {
+        Intent chatIntent = new Intent(GroupChatActivity.this, ChatActivity.class);
+        startActivity(chatIntent);
+    }
+
 
 }
