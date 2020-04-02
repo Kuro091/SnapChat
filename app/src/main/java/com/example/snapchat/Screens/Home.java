@@ -1,12 +1,15 @@
 package com.example.snapchat.Screens;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.accounts.Account;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -14,14 +17,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.snapchat.Entities.AccountUser;
+import com.example.snapchat.FirebaseRef.FirebaseDatabaseRef;
 import com.example.snapchat.R;
 import com.example.snapchat.Screens.EditImg.EditorMain;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import com.example.snapchat.Store.UserStore;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
     TextView txtUserName;
@@ -46,6 +56,21 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        FirebaseDatabaseRef.getUserRef().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    AccountUser user = snapshot.getValue(AccountUser.class);
+                    UserStore.getAllUsers().add(user);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         btnSnap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +161,5 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
         finish();
         System.exit(0);
     }
-
-
 
 }

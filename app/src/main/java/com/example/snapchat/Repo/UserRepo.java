@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.snapchat.Entities.AccountUser;
 import com.example.snapchat.FirebaseRef.FirebaseAuthRef;
 import com.example.snapchat.FirebaseRef.FirebaseDatabaseRef;
 
@@ -21,7 +22,7 @@ import com.example.snapchat.Store.UserStore;
 
 public class UserRepo {
 
-    private static UserRepo userRepo =null;
+    private static UserRepo userRepo = null;
 
     UserStore userStore;
 
@@ -30,6 +31,7 @@ public class UserRepo {
     }
 
     String userId = "";
+
     public void signUp(String email, String pass, final Context context) {
         FirebaseAuthRef.getmAuth().createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -38,6 +40,7 @@ public class UserRepo {
                 userId = task.getResult().getUser().getUid();
 
                 userStore = UserStore.getInstance();
+                userStore.getUser().setId(userId);
                 FirebaseDatabaseRef.getUserRef().child(userId).setValue(userStore.getUser());
             }
         }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -53,29 +56,28 @@ public class UserRepo {
         });
     }
 
-    public void signIn (String email, String pass, final Context context) {
+    public void signIn(String email, String pass, final Context context) {
         FirebaseAuthRef.getmAuth().signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Intent intent = new Intent(context, Home.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                }
-                else if (!task.isSuccessful()){
-                    Toast.makeText(context,"Wrong Email or Password",Toast.LENGTH_LONG).show();
+                } else if (!task.isSuccessful()) {
+                    Toast.makeText(context, "Wrong Email or Password", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
-    public static UserRepo getInstance()
-    {
+    public static UserRepo getInstance() {
         // To ensure only one instance is created
-        if (userRepo == null)
-        {
+        if (userRepo == null) {
             userRepo = new UserRepo();
         }
         return userRepo;
     }
+
+
 }

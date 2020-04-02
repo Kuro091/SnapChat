@@ -7,4 +7,5 @@ public class FirebaseAuthRef {
     public static FirebaseAuth getmAuth() {
         return FirebaseAuth.getInstance();
     }
+
 }
