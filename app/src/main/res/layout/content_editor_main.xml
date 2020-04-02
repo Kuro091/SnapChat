@@ -16,7 +16,7 @@
         android:layout_height="360dp"
         android:scaleType="centerCrop" />
 
-    <info.androidhive.imagefilters.utils.NonSwipeableViewPager
+    <com.example.snapchat.Utils.NonSwipeableViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -24,7 +24,7 @@
         android:layout_below="@+id/image_preview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

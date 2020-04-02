@@ -88,6 +88,7 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor_main);
+
         ButterKnife.bind(this);
 
         imagePreview = findViewById(R.id.image_preview);

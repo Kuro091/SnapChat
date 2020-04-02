@@ -1,46 +1,52 @@
 package com.example.snapchat.Screens;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.CameraX;
+import androidx.camera.core.Preview;
+import androidx.camera.core.PreviewConfig;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import android.accounts.Account;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.hardware.Camera;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.util.Size;
+import android.view.Surface;
+import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Matrix;
 
 import com.example.snapchat.Entities.AccountUser;
 import com.example.snapchat.FirebaseRef.FirebaseDatabaseRef;
 import com.example.snapchat.R;
-import com.example.snapchat.Screens.EditImg.EditorMain;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 
 import com.example.snapchat.Store.UserStore;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+
+public class Home extends AppCompatActivity {
+
+    private int REQUEST_CODE_PERMISSIONS = 10;
+
+    // This is an array of all the permission specified in the manifest.
+    private String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
+
     TextView txtUserName;
     Button btnSnap;
     Button btnChat;
-    private SurfaceView surfaceView;
-    private Camera camera;
-    private SurfaceHolder surfaceHolder;
-    private Camera.PictureCallback pictureCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +54,17 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
         setContentView(R.layout.activity_home);
 
         txtUserName = findViewById(R.id.textView11);
-
         txtUserName.setText(UserStore.getSignedInUser().getEmail());
+
         btnSnap = findViewById(R.id.btnCapture);
         btnChat = findViewById(R.id.btnChat);
-        surfaceView = findViewById(R.id.surfaceView);
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(this);
-        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        viewFinder = findViewById(R.id.view_finder);
 
         FirebaseDatabaseRef.getUserRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     AccountUser user = snapshot.getValue(AccountUser.class);
                     UserStore.getAllUsers().add(user);
                 }
@@ -75,28 +79,9 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
         btnSnap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                camera.takePicture(null, null, pictureCallback);
+
             }
         });
-
-        pictureCallback = new Camera.PictureCallback() {
-
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                Bitmap cbmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), null, true);
-
-
-                String pathFileName = currentDateFormat();
-                storePhotoToStorage(cbmp, pathFileName);
-
-                Toast.makeText(getApplicationContext(), "Done!!!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(), EditorMain.class);
-                intent.putExtra("myImage", data);
-                startActivity(intent);
-                camera.startPreview();
-            }
-        };
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,53 +91,102 @@ public class Home extends AppCompatActivity implements SurfaceHolder.Callback {
             }
         });
 
+        if (allPermissionsGranted()) {
+            viewFinder.post(() -> {
+                startCamera();
+            });
+        } else {
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+        }
+
+        viewFinder.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                updateTransform();
+            }
+        });
+
+    }
+
+    private ExecutorService excecutor = Executors.newSingleThreadExecutor();
+    private TextureView viewFinder;
+
+    private void startCamera() {
+        // Create configuration object for the viewfinder use case
+        PreviewConfig.Builder builder = new PreviewConfig.Builder();
+        builder.setTargetResolution(new Size(viewFinder.getWidth(), viewFinder.getHeight()));
+        PreviewConfig config = builder.build();
+
+        // Build the viewfinder use case
+        Preview preview = new Preview(config);
+
+        // Every time the viewfinder is updated, recompute layout
+        preview.setOnPreviewOutputUpdateListener(new Preview.OnPreviewOutputUpdateListener() {
+            @Override
+            public void onUpdated(@NonNull Preview.PreviewOutput output) {
+                ViewGroup parent = (ViewGroup) viewFinder.getParent();
+                parent.removeView(viewFinder);
+                parent.addView(viewFinder, 0);
+
+                viewFinder.setSurfaceTexture(output.getSurfaceTexture());
+                updateTransform();
+            }
+        });
+        // Bind use cases to lifecycle
+        CameraX.bindToLifecycle(this, preview);
+    }
+
+    private void updateTransform() {
+        Matrix matrix = new Matrix();
+
+        // Compute the center of the view finder
+        float centerX = viewFinder.getWidth() / 2f;
+        float centerY = viewFinder.getHeight() / 2f;
+
+        // Correct preview output to account for display rotation
+
+        float rotationDegrees = 0;
+        switch (viewFinder.getDisplay().getRotation()) {
+            case Surface.ROTATION_0:
+                rotationDegrees = 0;
+                break;
+            case Surface.ROTATION_90:
+                rotationDegrees = 90;
+                break;
+            case Surface.ROTATION_180:
+                rotationDegrees = 180;
+                break;
+            case Surface.ROTATION_270:
+                rotationDegrees = 270;
+                break;
+            default:
+                matrix.postRotate(-rotationDegrees, centerX, centerY);
+                ;
+        }
+        // Finally, apply transformations to our TextureView
+        viewFinder.setTransform(matrix);
     }
 
     private void storePhotoToStorage(Bitmap cbmp, String pathFileName) {
-
-
-    }
-
-    private String currentDateFormat() {
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
-        String currentTime = dateFormat.format(new Date());
-        return currentTime;
-
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        try {
-            camera = Camera.open();
-        } catch (Exception ex) {
-
-        }
-        Camera.Parameters parameters;
-        parameters = camera.getParameters();
-        parameters.setPreviewFrameRate(20);
-        parameters.setPreviewSize(352, 288);
-        camera.setParameters(parameters);
-        camera.setDisplayOrientation(90);
-        try {
-            camera.setPreviewDisplay(surfaceHolder);
-            camera.startPreview();
-            ;
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (allPermissionsGranted()) {
+                viewFinder.post(() -> {
+                    startCamera();
+                });
+            } else {
+                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        camera.stopPreview();
-        camera.release();
-        camera = null;
+    private boolean allPermissionsGranted() {
+        return ContextCompat.checkSelfPermission(getBaseContext(), REQUIRED_PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override

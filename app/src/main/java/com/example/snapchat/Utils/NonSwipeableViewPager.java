@@ -10,10 +10,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.lang.reflect.Field;
 
-/**
- * https://stackoverflow.com/questions/9650265/how-do-disable-paging-by-swiping-with-finger-in-viewpager-but-still-be-able-to-s
- */
-
 public class NonSwipeableViewPager extends ViewPager {
 
     public NonSwipeableViewPager(Context context) {
