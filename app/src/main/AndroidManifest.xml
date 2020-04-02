@@ -16,16 +16,14 @@
         <activity
             android:name=".Screens.EditImg.EditorMain"
             android:label="@string/title_activity_editor_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Screens.EditImage.EditImage" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true"
+            ></activity>
         <activity
             android:name=".Screens.Home"
             android:exported="true" />
         <activity android:name=".Screens.GroupChatActivity" />
         <activity android:name=".Screens.ChatActivity" />
-        <activity
-            android:name=".Screens.Home"
-            android:exported="true" />
         <activity android:name=".Screens.SignIn" />
         <activity
             android:name=".Screens.SignUp.SignUp_Phone"
