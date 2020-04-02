@@ -1,9 +1,12 @@
 package com.example.snapchat.Screens;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraX;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureConfig;
 import androidx.camera.core.Preview;
 import androidx.camera.core.PreviewConfig;
 import androidx.core.app.ActivityCompat;
@@ -13,6 +16,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Size;
 import android.view.Surface;
@@ -33,6 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -132,6 +137,43 @@ public class Home extends AppCompatActivity {
                 updateTransform();
             }
         });
+
+// Create configuration object for the image capture use case
+        ImageCaptureConfig.Builder imgCaptureBuilder = new ImageCaptureConfig.Builder();
+        imgCaptureBuilder.setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY);
+
+        ImageCaptureConfig imageCaptureConfig = imgCaptureBuilder.build();
+
+        // Build the image capture use case and attach button click listener
+        ImageCapture imageCapture = new ImageCapture(imageCaptureConfig);
+        btnSnap.setOnClickListener(new View.OnClickListener() {
+            File[] files = getExternalMediaDirs();
+            File file = new File(files[0], "${System.currentTimeMillis()}.jpg");
+
+
+
+            @Override
+            public void onClick(View v) {
+                imageCapture.takePicture(file, excecutor, new ImageCapture.OnImageSavedListener() {
+                    @Override
+                    public void onImageSaved(@NonNull File file) {
+                        String filePath = file.getPath();
+                        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+
+
+                        Toast.makeText(getApplicationContext(), "Capture success!!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(@NonNull ImageCapture.ImageCaptureError imageCaptureError, @NonNull String message, @Nullable Throwable cause) {
+                        Toast.makeText(getApplicationContext(), "Capture failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+
         // Bind use cases to lifecycle
         CameraX.bindToLifecycle(this, preview);
     }
