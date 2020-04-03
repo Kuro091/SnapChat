@@ -53,7 +53,6 @@ public class GroupChatActivity extends AppCompatActivity {
 
     private List<String> test;
 
-    String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +78,7 @@ public class GroupChatActivity extends AppCompatActivity {
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users");
 
         String currenUserEmailSubString = mAuth.getCurrentUser().getEmail().toString();
-        currenUserEmailSubString =  currenUserEmailSubString.substring(0, test.indexOf("@"));
+        currenUserEmailSubString =  currenUserEmailSubString.substring(0, currenUserEmailSubString.indexOf("@"));
         ThisAccountMessageRef = FirebaseDatabaseRef.getUserRef().child(FirebaseDatabaseRef.getUserId()).child("messages").child(currentFriendName);
         FriendAccountMessageRef = FirebaseDatabaseRef.getUserRef().child(clickedFriend.getId()).child("messages").child(currenUserEmailSubString);
 
