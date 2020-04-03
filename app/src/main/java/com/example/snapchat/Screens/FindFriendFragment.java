@@ -1,6 +1,8 @@
 package com.example.snapchat.Screens;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,7 +48,9 @@ public class FindFriendFragment extends Fragment {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private String currentUserID = mAuth.getCurrentUser().getUid();
     private DatabaseReference ListFriendRef, FriendRef;
-    private List<String> listEmail = new ArrayList<String>();;
+    private List<String> listEmail = new ArrayList<String>();
+    private Bitmap finalImg;
+
     //private DataSnapshot dataSnapshot;
 
 
@@ -61,8 +65,6 @@ public class FindFriendFragment extends Fragment {
         // Inflate the layout for this fragment
         friendFragmentView = inflater.inflate(R.layout.fragment_find_friend, container, false);
         ListFriendRef = FirebaseDatabase.getInstance().getReference().child("users");
-
-
 
 
         IntializeFields();
@@ -85,9 +87,7 @@ public class FindFriendFragment extends Fragment {
 
             }
         });
-
-
-
+        byte[] byteArray =  getArguments().getByteArray("image");
 
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,6 +96,7 @@ public class FindFriendFragment extends Fragment {
 
                 Intent groupChatIntent = new Intent(getContext(), GroupChatActivity.class);
                 groupChatIntent.putExtra("friendName", currentFriendName);
+                groupChatIntent.putExtra("image", byteArray);
                 startActivity(groupChatIntent);
             }
         });

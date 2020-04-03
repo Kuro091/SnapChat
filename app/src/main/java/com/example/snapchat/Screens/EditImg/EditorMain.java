@@ -28,6 +28,8 @@ import com.example.snapchat.R;
 import com.example.snapchat.Repo.ImageRepo;
 import com.example.snapchat.Screens.EditImg.Fragments.EditImageFragment;
 import com.example.snapchat.Screens.EditImg.Fragments.FiltersListFragment;
+import com.example.snapchat.Screens.FindFriendFragment;
+import com.example.snapchat.Screens.GroupChatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.karumi.dexter.Dexter;
@@ -40,6 +42,7 @@ import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -260,6 +263,17 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
         if (id == R.id.action_save) {
             saveImageToGallery();
             ImageRepo.UploadImage(finalImage, UUID.randomUUID() + ".jpg");
+            ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+            finalImage.compress(Bitmap.CompressFormat.PNG, 100, bStream);
+            byte[] byteArray = bStream.toByteArray();
+
+            Bundle bundle = new Bundle();
+            bundle.putByteArray("image", byteArray);
+
+            FindFriendFragment friendFragment = new FindFriendFragment();
+            friendFragment.setArguments(bundle);
+            finish();
+
             return true;
         }
 
