@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.snapchat.Entities.AccountUser;
+import com.example.snapchat.FirebaseRef.FirebaseAuthRef;
 import com.example.snapchat.FirebaseRef.FirebaseDatabaseRef;
 import com.example.snapchat.R;
 import com.example.snapchat.Store.UserStore;
@@ -95,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         ThisAccountMessageRef = FirebaseDatabaseRef.getUserRef().child(FirebaseDatabaseRef.getUserId()).child("friend").child(currentFriendName);
         FriendAccountMessageRef = FirebaseDatabaseRef.getUserRef().child(clickedFriend.getId()).child("friend").child(currenUserEmailSubString);
+
 
         String friendkEY = ThisAccountMessageRef.push().getKey();
 

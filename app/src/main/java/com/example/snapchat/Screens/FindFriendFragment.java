@@ -49,7 +49,7 @@ public class FindFriendFragment extends Fragment {
     private String currentUserID = mAuth.getCurrentUser().getUid();
     private DatabaseReference ListFriendRef, FriendRef;
     private List<String> listEmail = new ArrayList<String>();
-    private Bitmap finalImg;
+    //private Bitmap finalImg;
 
     //private DataSnapshot dataSnapshot;
 
@@ -87,7 +87,7 @@ public class FindFriendFragment extends Fragment {
 
             }
         });
-        byte[] byteArray =  getArguments().getByteArray("image");
+        //byte[] byteArray =  getArguments().getByteArray("image");
 
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,7 +96,7 @@ public class FindFriendFragment extends Fragment {
 
                 Intent groupChatIntent = new Intent(getContext(), GroupChatActivity.class);
                 groupChatIntent.putExtra("friendName", currentFriendName);
-                groupChatIntent.putExtra("image", byteArray);
+                //groupChatIntent.putExtra("image", byteArray);
                 startActivity(groupChatIntent);
             }
         });

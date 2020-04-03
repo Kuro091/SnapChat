@@ -3,6 +3,7 @@ package com.example.snapchat.Screens;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,8 +41,8 @@ public class FindFindFriendFragment extends Fragment {
     private ArrayList<String> list_of_groups = new ArrayList<>();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private String currentUserID = mAuth.getCurrentUser().getUid();
-    private DatabaseReference ListFriendRef;
-
+    private DatabaseReference ListFriendRef,FriendRef;
+    private List<String> listEmail = new ArrayList<String>();
     public FindFindFriendFragment() {
         // Required empty public constructor
     }
@@ -58,7 +60,25 @@ public class FindFindFriendFragment extends Fragment {
 
         IntializeFields();
 
-        RetrieveAndDisplayGroups();
+
+        FriendRef = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuthRef.getmAuth().getCurrentUser().getUid()).child("friend");
+        FriendRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String email = snapshot.getKey() + "@gmail.com";
+                        listEmail.add(email);
+                    }
+                }
+                RetrieveAndDisplayGroups();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,6 +121,11 @@ public class FindFindFriendFragment extends Fragment {
 
                 String key = FirebaseAuthRef.getmAuth().getCurrentUser().getEmail();
                 set.remove(key);
+
+                for (String temp: listEmail) {
+                    set.remove(temp);
+                }
+
                 list_of_groups.clear();
                 list_of_groups.addAll(set);
 
