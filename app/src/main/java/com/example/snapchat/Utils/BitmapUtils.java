@@ -76,6 +76,24 @@ public class BitmapUtils {
         return BitmapFactory.decodeFile(picturePath, options);
     }
 
+    public static Bitmap getBitmapFromGallery2(Context context, Uri path, int width, int height) {
+        String[] filePath = { MediaStore.Images.Media.DATA };
+        Cursor cursor = context.getContentResolver().query(path, filePath, null, null, null);
+        cursor.moveToFirst();
+        String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+cursor.close();
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imagePath, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, 600, 600);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(imagePath, options);
+    }
+
     private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image

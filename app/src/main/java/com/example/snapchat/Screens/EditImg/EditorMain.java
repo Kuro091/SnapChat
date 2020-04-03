@@ -2,10 +2,12 @@ package com.example.snapchat.Screens.EditImg;
 
 import android.Manifest;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.snapchat.R;
+import com.example.snapchat.Repo.ImageRepo;
 import com.example.snapchat.Screens.EditImg.Fragments.EditImageFragment;
 import com.example.snapchat.Screens.EditImg.Fragments.FiltersListFragment;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,10 +42,12 @@ import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.example.snapchat.Utils.BitmapUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class EditorMain extends AppCompatActivity implements FiltersListFragment.FiltersListFragmentListener, EditImageFragment.EditImageFragmentListener {
 
@@ -104,6 +109,13 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -247,8 +259,10 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
 
         if (id == R.id.action_save) {
             saveImageToGallery();
+            ImageRepo.UploadImage(finalImage, UUID.randomUUID() + ".jpg");
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -257,7 +271,7 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == SELECT_GALLERY_IMAGE) {
-            Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, data.getData(), 800, 800);
+            Bitmap bitmap = BitmapUtils.getBitmapFromGallery2(this, data.getData(), 800, 800);
 
             // clear bitmap memory
             originalImage.recycle();
@@ -342,5 +356,11 @@ public class EditorMain extends AppCompatActivity implements FiltersListFragment
         intent.setAction(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.parse(path), "image/*");
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

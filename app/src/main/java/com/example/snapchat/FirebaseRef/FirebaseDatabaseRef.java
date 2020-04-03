@@ -34,4 +34,6 @@ public class FirebaseDatabaseRef {
     public static DatabaseReference getMessageRef(){
         return FirebaseDatabaseRef.getmDatabase().child("users").child(getUserId()).child("messages");
     }
+
+
 }
