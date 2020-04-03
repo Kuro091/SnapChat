@@ -10,6 +10,7 @@ import com.example.snapchat.Entities.AccountUser;
 import com.example.snapchat.FirebaseRef.FirebaseAuthRef;
 import com.example.snapchat.FirebaseRef.FirebaseDatabaseRef;
 
+import com.example.snapchat.Screens.ChatActivity;
 import com.example.snapchat.Screens.Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

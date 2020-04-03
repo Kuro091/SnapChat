@@ -21,8 +21,8 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
                 FindFriendFragment chatsFragment = new FindFriendFragment();
                 return chatsFragment;
             case 1:
-                FindFriendFragment groupFragment = new FindFriendFragment();
-                return groupFragment;
+                FindFindFriendFragment findfriendFragment = new FindFindFriendFragment();
+                return findfriendFragment;
             default:
                 return null;
 

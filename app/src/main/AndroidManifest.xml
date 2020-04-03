@@ -13,12 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".Screens.EditImg.EditorMain"
-            android:label="@string/title_activity_editor_main"
-            android:theme="@style/AppTheme.NoActionBar"
             android:exported="true"
-            ></activity>
+            android:label="@string/title_activity_editor_main"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Screens.Home"
             android:exported="true" />
@@ -46,6 +46,8 @@
         <activity
             android:name=".Screens.Snap"
             android:exported="true" />
+
+        <activity android:name=".Screens.ProfileActivity"></activity>
         <activity android:name=".Screens.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -234,7 +234,7 @@ public class Home extends AppCompatActivity {
     }
 
     private boolean allPermissionsGranted() {
-        return ContextCompat.checkSelfPermission(getBaseContext(), REQUIRED_PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
